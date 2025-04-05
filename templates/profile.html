@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>个人资料 - Web游戏平台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+        }
+
+        .game-history {
+            margin-top: 20px;
+        }
+
+        .game-record {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .nav-links a {
+            margin: 0 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h2>{{ user.username }}的个人资料</h2>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-value">{{ user.games_played }}</div>
+                <div class="stat-label">总对局数</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">{{ user.games_won }}</div>
+                <div class="stat-label">胜利场数</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">{{ "%.1f"|format(user.games_won / user.games_played * 100 if user.games_played else 0) }}%</div>
+                <div class="stat-label">胜率</div>
+            </div>
+        </div>
+
+        <div class="game-history">
+            <h3>最近对局</h3>
+            {% for game in games %}
+            <div class="game-record">
+                <p>
+                    黑方: {{ User.query.get(game.black_player_id).username }} vs
+                    白方: {{ User.query.get(game.white_player_id).username }}
+                </p>
+                <p>
+                    获胜者: {{ User.query.get(game.winner_id).username }}
+                </p>
+                <p>对局时间: {{ game.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">返回游戏</a>
+            <a href="{{ url_for('logout') }}">退出登录</a>
+        </div>
+    </div>
+</body>
+</html>

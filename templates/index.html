@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>在线游戏平台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .user-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-controls {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-controls button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+        }
+
+        .game-controls button:hover {
+            background-color: #2980b9;
+        }
+
+        .game-controls button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        #gameCanvas {
+            border: 2px solid #2c3e50;
+            background-color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- 左侧游戏选择栏 -->
+        <div class="game-sidebar">
+            <div class="user-info">
+                <p>当前用户：{{ current_user.username }}</p>
+                <a href="{{ url_for('profile') }}">个人资料</a> |
+                <a href="{{ url_for('logout') }}">退出登录</a>
+            </div>
+            <div class="game-tabs">
+                <button class="game-tab active" data-game="gomoku">五子棋</button>
+                <button class="game-tab" data-game="coming-soon" disabled>更多游戏开发中...</button>
+            </div>
+        </div>
+
+        <!-- 右侧游戏区域 -->
+        <div class="game-content">
+            <div class="game-container">
+                <canvas id="gameCanvas"></canvas>
+                <div class="game-controls">
+                    <button id="undoBtn" onclick="requestUndo()">悔棋</button>
+                    <button id="restartBtn" onclick="requestRestart()">重新开始</button>
+                    <button id="toggleSoundBtn" onclick="toggleSound()">音效：开</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        // 音效对象
+        const sounds = {
+            place: new Audio('/static/sounds/place.mp3'),
+            win: new Audio('/static/sounds/win.mp3'),
+            undo: new Audio('/static/sounds/undo.mp3')
+        };
+
+        let soundEnabled = true;
+
+        function playSound(soundName) {
+            if (soundEnabled && sounds[soundName]) {
+                sounds[soundName].currentTime = 0;
+                sounds[soundName].play().catch(e => console.log('Sound play failed:', e));
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('toggleSoundBtn').textContent = `音效：${soundEnabled ? '开' : '关'}`;
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/gomoku.js') }}"></script>
+    <script>
+        // 初始化游戏
+        document.addEventListener('DOMContentLoaded', function() {
+            window.game = new GomokuGame('gameCanvas');
+            console.log('Game initialized');
+        });
+
+        // 悔棋请求
+        function requestUndo() {
+            if (window.game) {
+                window.game.socket.emit('undo_request', { game_id: 'default' });
+            }
+        }
+
+        // 重新开始请求
+        function requestRestart() {
+            if (window.game) {
+                window.game.socket.emit('restart');
+            }
+        }
+    </script>
+</body>
+</html>

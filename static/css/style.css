@@ -1,0 +1,219 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ecf0f1;
+    font-family: Arial, sans-serif;
+}
+
+.game-container {
+    position: relative;
+    margin: 20px;
+}
+
+.user-info {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-info a {
+    color: #3498db;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.user-info a:hover {
+    text-decoration: underline;
+}
+
+.game-controls {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-controls button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    min-width: 100px;
+}
+
+.game-controls button:hover {
+    background-color: #2980b9;
+}
+
+.game-controls button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+#gameCanvas {
+    border: 2px solid #2c3e50;
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 登录和注册页面样式 */
+.auth-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.auth-links a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.flash-messages {
+    margin-bottom: 15px;
+    color: #e74c3c;
+    text-align: center;
+}
+
+/* 个人资料页面样式 */
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.stat-label {
+    color: #7f8c8d;
+}
+
+.game-history {
+    margin-top: 20px;
+}
+
+.game-record {
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.game-record:hover {
+    background-color: #e9ecef;
+}
+
+.nav-links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.nav-links a {
+    margin: 0 10px;
+    color: #3498db;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
