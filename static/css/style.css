@@ -1,19 +1,72 @@
 body {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: #ecf0f1;
     font-family: Arial, sans-serif;
 }
 
-.game-container {
-    position: relative;
-    margin: 20px;
+.main-container {
+    display: flex;
+    min-height: 100vh;
 }
 
+/* 左侧游戏选择栏样式 */
+.game-sidebar {
+    width: 200px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.game-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 80px; /* 为顶部用户信息留出空间 */
+}
+
+.game-tab {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.game-tab:hover {
+    background-color: #2980b9;
+}
+
+.game-tab.active {
+    background-color: #2980b9;
+}
+
+.game-tab:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+/* 右侧游戏区域样式 */
+.game-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.game-container {
+    position: relative;
+}
+
+/* 用户信息样式 */
 .user-info {
     position: fixed;
     top: 20px;
@@ -34,15 +87,19 @@ body {
     text-decoration: underline;
 }
 
+/* 游戏控制按钮样式 */
 .game-controls {
     position: fixed;
-    left: 20px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     background-color: white;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .game-controls button {

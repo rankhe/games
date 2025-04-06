@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>贪吃蛇 - Web游戏平台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .game-container {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .game-header {
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .game-score {
+            font-size: 20px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        #gameCanvas {
+            border: 2px solid #2c3e50;
+            border-radius: 4px;
+            background-color: #2c3e50;
+        }
+
+        .game-controls {
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+
+        .nav-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .nav-links a {
+            margin: 0 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .instructions {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">贪吃蛇</h1>
+            <div class="game-score" id="score">分数: 0</div>
+        </div>
+
+        <canvas id="gameCanvas" width="600" height="600"></canvas>
+
+        <div class="instructions">
+            <h3>游戏说明</h3>
+            <ul>
+                <li>使用方向键控制蛇的移动</li>
+                <li>吃到食物（红色方块）可以增加分数</li>
+                <li>撞到自己或边界游戏结束</li>
+                <li>游戏结束后按空格键重新开始</li>
+            </ul>
+        </div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}">返回首页</a>
+            <a href="{{ url_for('profile') }}">个人资料</a>
+            <a href="{{ url_for('logout') }}">退出登录</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/snake.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('gameCanvas');
+            const scoreElement = document.getElementById('score');
+            const game = new SnakeGame(canvas, scoreElement);
+            game.start();
+        });
+    </script>
+</body>
+</html>

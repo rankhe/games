@@ -90,6 +90,11 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/snake')
+@login_required
+def snake():
+    return render_template('snake.html')
+
 @app.route('/profile')
 @login_required
 def profile():
