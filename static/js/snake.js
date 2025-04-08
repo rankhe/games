@@ -5,11 +5,10 @@ class SnakeGame {
         this.scoreElement = scoreElement;
         this.gridSize = 20;
         this.tileCount = canvas.width / this.gridSize;
-        this.reset();
 
-        // 初始化音效
-        this.eatSound = new Audio('static/sounds/place.mp3');
-        this.gameOverSound = new Audio('static/sounds/undo.mp3');
+        // 初始化音效 - 使用正确的路径
+        this.eatSound = new Audio('/static/sounds/eat.mp3');
+        this.gameOverSound = new Audio('/static/sounds/game_over.mp3');
 
         // 安全播放音频的辅助方法
         this.playSound = async (sound) => {
@@ -22,13 +21,16 @@ class SnakeGame {
 
         // 绑定键盘事件
         document.addEventListener('keydown', this.onKeyPress.bind(this));
+
+        // 在构造函数最后调用reset
+        this.reset();
     }
 
     reset() {
-        // 蛇的初始位置和方向
+        // 蛇的初始位置和方向 - 给蛇一个初始方向，避免静止状态
         this.snake = [{x: 10, y: 10}];
-        this.direction = {x: 0, y: 0};
-        this.nextDirection = {x: 0, y: 0};
+        this.direction = {x: 1, y: 0}; // 初始向右移动
+        this.nextDirection = {x: 1, y: 0};
 
         // 食物位置
         this.food = this.generateFood();
@@ -41,6 +43,9 @@ class SnakeGame {
 
         // 更新分数显示
         this.updateScore();
+
+        // 重新绘制游戏状态
+        this.draw();
     }
 
     generateFood() {
@@ -59,18 +64,30 @@ class SnakeGame {
             return;
         }
 
+        // 如果方向为零向量，游戏不会开始
+        if (this.direction.x === 0 && this.direction.y === 0) {
+            return;
+        }
+
         if (timestamp - this.lastUpdate > this.speed) {
             this.lastUpdate = timestamp;
             this.direction = this.nextDirection;
 
-            // 计算新的蛇头位置
+            // 计算新的蛇头位置（不再使用模运算实现环绕）
             const head = {
-                x: (this.snake[0].x + this.direction.x + this.tileCount) % this.tileCount,
-                y: (this.snake[0].y + this.direction.y + this.tileCount) % this.tileCount
+                x: this.snake[0].x + this.direction.x,
+                y: this.snake[0].y + this.direction.y
             };
 
-            // 检查是否撞到自己
-            if (this.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+            // 检查是否撞到边界
+            if (head.x < 0 || head.x >= this.tileCount || head.y < 0 || head.y >= this.tileCount) {
+                this.gameOver = true;
+                this.playSound(this.gameOverSound);
+                return;
+            }
+
+            // 检查是否撞到自己（只有当蛇长度大于1时才检查）
+            if (this.snake.length > 1 && this.snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
                 this.gameOver = true;
                 this.playSound(this.gameOverSound);
                 return;

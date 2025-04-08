@@ -45,10 +45,20 @@ class GomokuGame {
         this.ctx.fillStyle = '#f8c37d';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // 绘制网格线
+        // 绘制外边框
         this.ctx.strokeStyle = '#000';
-        this.ctx.lineWidth = 1;
+        this.ctx.lineWidth = 2;  // 外边框稍微粗一些
+        this.ctx.beginPath();
+        this.ctx.rect(
+            this.boardPadding,
+            this.boardPadding,
+            this.canvas.width - 2 * this.boardPadding,
+            this.canvas.height - 2 * this.boardPadding
+        );
+        this.ctx.stroke();
 
+        // 绘制内部网格线
+        this.ctx.lineWidth = 1;
         for (let i = 0; i < this.boardSize; i++) {
             // 横线
             this.ctx.beginPath();

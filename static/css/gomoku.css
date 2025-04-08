@@ -1,0 +1,32 @@
+#gameCanvas {
+    background-color: #f1c40f;
+    border: 2px solid #2c3e50;
+    border-radius: 4px;
+}
+
+/* 游戏标题样式 */
+.game-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* 游戏说明样式 */
+.instructions {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.instructions ul {
+    padding-left: 20px;
+    color: #34495e;
+}
