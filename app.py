@@ -95,6 +95,15 @@ def logout():
 def snake():
     return render_template('snake.html')
 
+@app.route('/memory')
+def memory():
+    return render_template('memory.html')
+
+@app.route('/tank')
+def tank():
+    return render_template('tank.html')
+    return render_template('memory.html')
+
 @app.route('/profile')
 @login_required
 def profile():

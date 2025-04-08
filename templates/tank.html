@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>坦克大战</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tank.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 左侧游戏选择栏 -->
+        <div class="game-sidebar">
+            <div class="game-tabs">
+                <button class="game-tab" data-game="gomoku" onclick="window.location.href='{{ url_for('index') }}'">五子棋</button>
+                <button class="game-tab" data-game="snake" onclick="window.location.href='{{ url_for('snake') }}'">贪吃蛇</button>
+                <button class="game-tab" data-game="memory" onclick="window.location.href='{{ url_for('memory') }}'">记忆配对</button>
+                <button class="game-tab active" data-game="tank">坦克大战</button>
+                <button class="game-tab" data-game="coming-soon" disabled>更多游戏开发中...</button>
+            </div>
+        </div>
+
+        <!-- 右侧游戏区域 -->
+        <div class="game-content">
+            <div class="game-board">
+                <h1>坦克大战</h1>
+                <div class="tank-game-container">
+                    <canvas id="gameCanvas" width="416" height="416"></canvas>
+                    <div id="gameInfo">
+                        <div class="info-item">关卡: <span id="level">1</span></div>
+                        <div class="info-item">得分: <span id="score">0</span></div>
+                        <div class="info-item">生命: <span id="lives">3</span></div>
+                        <div class="info-item">敌人: <span id="enemies">20</span></div>
+                        <button id="startButton" class="game-button">开始游戏</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/tank.js') }}"></script>
+</body>
+</html>

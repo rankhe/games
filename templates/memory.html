@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <title>贪吃蛇 - Web游戏平台</title>
+    <title>记忆配对 - Web游戏平台</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/snake.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/memory.css') }}">
 </head>
 <body>
     <!-- 用户信息 -->
@@ -20,8 +20,8 @@
         <div class="game-sidebar">
             <div class="game-tabs">
                 <button class="game-tab" data-game="gomoku" onclick="window.location.href='{{ url_for('index') }}'">五子棋</button>
-                <button class="game-tab active" data-game="snake">贪吃蛇</button>
-                <button class="game-tab" data-game="memory" onclick="window.location.href='{{ url_for('memory') }}'">记忆配对</button>
+                <button class="game-tab" data-game="snake" onclick="window.location.href='{{ url_for('snake') }}'">贪吃蛇</button>
+                <button class="game-tab active" data-game="memory">记忆配对</button>
                 <button class="game-tab" data-game="tank" onclick="window.location.href='{{ url_for('tank') }}'">坦克大战</button>
                 <button class="game-tab" data-game="coming-soon" disabled>更多游戏开发中...</button>
             </div>
@@ -30,17 +30,21 @@
         <!-- 右侧游戏区域 -->
         <div class="game-content">
             <div class="game-container">
-                <h1 class="game-title">贪吃蛇</h1>
-                <div class="game-score" id="score">分数: 0</div>
-                <canvas id="gameCanvas" width="600" height="600"></canvas>
+                <h1 class="game-title">记忆配对</h1>
+                <div class="game-stats">
+                    <span id="moves">移动次数: 0</span>
+                    <span id="pairs">配对数: 0/8</span>
+                    <span id="timer">用时: 00:00</span>
+                </div>
+                <div class="memory-board" id="gameBoard"></div>
 
                 <div class="instructions">
                     <h3>游戏说明</h3>
                     <ul>
-                        <li>使用方向键控制蛇的移动</li>
-                        <li>吃到食物（红色方块）可以增加分数</li>
-                        <li>撞到自己或边界游戏结束</li>
-                        <li>游戏结束后按空格键或点击"重新开始"按钮重新开始</li>
+                        <li>点击卡片将其翻转</li>
+                        <li>每次可以翻转两张卡片</li>
+                        <li>找到所有相同的配对即可获胜</li>
+                        <li>尽量用最少的步数完成游戏</li>
                     </ul>
                 </div>
             </div>
@@ -53,17 +57,17 @@
         <button id="toggleSoundBtn">音效：开</button>
     </div>
 
-    <script src="{{ url_for('static', filename='js/snake.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/memory.js') }}"></script>
     <script>
         let sounds = {};
         let soundEnabled = true;
 
-        // 在用户首次交互时初始化音频
         function initSounds() {
             if (Object.keys(sounds).length === 0) {
                 sounds = {
-                    eat: new Audio('/static/sounds/eat.mp3'),
-                    game_over: new Audio('/static/sounds/game_over.mp3')
+                    flip: new Audio('/static/sounds/place.mp3'),
+                    match: new Audio('/static/sounds/eat.mp3'),
+                    win: new Audio('/static/sounds/win.mp3')
                 };
             }
         }
@@ -80,28 +84,12 @@
             const btn = document.getElementById('toggleSoundBtn');
             if (btn) {
                 btn.textContent = `音效：${soundEnabled ? '开' : '关'}`;
-                // 用户点击音效按钮时初始化音频
                 initSounds();
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('gameCanvas');
-            const scoreElement = document.getElementById('score');
-            const game = new SnakeGame(canvas, scoreElement);
-            game.start();
-
-            // 重新开始按钮
-            const restartBtn = document.getElementById('restartBtn');
-            if (restartBtn) {
-                restartBtn.addEventListener('click', function() {
-                    game.reset();
-                    // 用户点击重新开始时初始化音频
-                    initSounds();
-                });
-            }
-
-            // 音效按钮
+            initSounds();
             const toggleSoundBtn = document.getElementById('toggleSoundBtn');
             if (toggleSoundBtn) {
                 toggleSoundBtn.addEventListener('click', toggleSound);

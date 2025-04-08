@@ -1,0 +1,68 @@
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 400px; /* 调整为更小的尺寸 */
+}
+
+.card {
+    aspect-ratio: 1/1; /* 使卡片成为正方形 */
+    background-color: #3498db; /* 更改背景颜色 */
+    border: 2px solid #2980b9;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    transition: transform 0.3s, background-color 0.3s;
+    color: white;
+}
+
+.card:not(.flipped):not(.matched)::before {
+    content: "★"; /* 使用星星符号替代问号 */
+    font-size: 1.5em;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+    background-color: #fff;
+    color: #333;
+}
+
+.card.matched {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.game-stats span {
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#gameBoard {
+    margin-bottom: 20px;
+}
+
+.instructions {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.instructions ul {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 5px;
+}
